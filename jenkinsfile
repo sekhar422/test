@@ -1,0 +1,19 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello World'
+            }
+        }
+    }
+    
+    post
+    {
+        always
+        {
+             slackSend channel: ' slacknotification' , message: "Please find status of pipeline Status ${currentBuild.currentResult} ${env.JOB_NAME} ${env.BUILD_NUMBER} ${env.BUILD_URL}"
+        }
+    }
+}
